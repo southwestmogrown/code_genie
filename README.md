@@ -2,7 +2,7 @@
 
 A CrewAI Flow that:
 
-- generates Python code from a user prompt,
+- generates code from a user prompt,
 - reviews it for quality,
 - optionally refactors through review cycles,
 - writes final artifacts to `outputs/` on completion.
@@ -26,8 +26,15 @@ Execution path:
 
 On finish, artifacts are written to `outputs/`:
 
-- `<function_name>.py`
-- `<function_name>_review.md`
+- `<artifact_name>.<ext>`
+- `<artifact_name>_review.md`
+
+Supported code artifact languages/extensions:
+
+- Python: `.py`
+- JavaScript: `.js`
+- Go: `.go`
+- SQL: `.sql`
 
 `outputs/` is cleared before writing new artifacts.
 
@@ -71,8 +78,8 @@ If no prompt is supplied, `DEFAULT_CODING_PROMPT` from `src/coder_reveiwer_flow/
 
 After a successful run:
 
-- `outputs/<function_name>.py` contains cleaned Python code (no markdown code fences)
-- `outputs/<function_name>_review.md` contains reviewer output
+- `outputs/<artifact_name>.<ext>` contains cleaned code (no markdown code fences)
+- `outputs/<artifact_name>_review.md` contains reviewer output
 
 ## Project Layout
 
