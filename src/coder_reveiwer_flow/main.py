@@ -119,7 +119,7 @@ class CodeReviewFlow(Flow[CodeReviewState]):
         self.state.revision_round += 1
         return self.state.draft_code
 
-    @listen(or_(write_code, refactor_code))
+    @listen(or_("write_code", "refactor_code"))
     def write_code_review(self):
         print("Generating code review")
         prompt = (
@@ -133,8 +133,9 @@ class CodeReviewFlow(Flow[CodeReviewState]):
         result = self._reviewer_agent().kickoff(prompt)
         print("Code review generated", result.raw)
         self.state.code_review = result.raw
-        first_line = result.raw.strip().splitlines()[0].upper()
-        self.state.is_approved = first_line.startswith("APPROVED")
+        first_line = result.raw.strip().splitlines()[0] if result.raw.strip() else ""
+        normalized_first_line = re.sub(r"^[\s#>*`\-_:]+", "", first_line).upper()
+        self.state.is_approved = normalized_first_line.startswith("APPROVED")
         return self.state.code_review
 
     @router(write_code_review)
@@ -174,7 +175,7 @@ def kickoff():
     )
     args, _ = parser.parse_known_args()
 
-    prompt = args.prompt.strip() or os.getenv("CODER_REVIEW_PROMPT", "").strip()
+    prompt = args.prompt.strip() or os.getenv("CODE_GENIE", "").strip()
 
     code_review_flow = CodeReviewFlow()
     code_review_flow.kickoff(inputs={"coding_prompt": prompt})

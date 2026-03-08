@@ -1,4 +1,4 @@
-# coder_reveiwer_flow
+# Code Genie
 
 A CrewAI Flow that:
 
@@ -56,7 +56,7 @@ uv run kickoff --prompt "Write a Python function named add_one that adds 1 to an
 ### Option 2: Use CrewAI CLI with env var prompt
 
 ```bash
-CODER_REVIEW_PROMPT="Write a Python function named add_one that adds 1 to an integer." crewai flow kickoff
+CODE_GENIE="Write a Python function named add_one that adds 1 to an integer." crewai flow kickoff
 ```
 
 ### Option 3: Use default prompt

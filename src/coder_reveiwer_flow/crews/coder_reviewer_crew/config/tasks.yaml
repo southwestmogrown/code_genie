@@ -16,8 +16,6 @@ review_code:
     Reviewer feedback that starts with either "APPROVED" or "REVISIONS NEEDED".
     Include concise rationale and concrete action items when revisions are needed.
   agent: reviewer
-  context:
-    - write_code
 
 refactor_code:
   description: >
@@ -27,5 +25,3 @@ refactor_code:
     Updated code that addresses all reviewer findings and remains aligned with
     the user request ({prompt}).
   agent: coder
-  context:
-    - review_code
