@@ -1,0 +1,31 @@
+write_code:
+  description: >
+    Implement code based on this user request: {prompt}.
+    Prioritize correctness, readability, and maintainability.
+  expected_output: >
+    A complete code solution that satisfies the user request,
+    including a short usage example.
+  agent: coder
+
+review_code:
+  description: >
+    Review the provided code against the user request ({prompt}).
+    Check correctness, edge cases, performance, and code quality.
+    If anything is missing or risky, request revisions with concrete fixes.
+  expected_output: >
+    Reviewer feedback that starts with either "APPROVED" or "REVISIONS NEEDED".
+    Include concise rationale and concrete action items when revisions are needed.
+  agent: reviewer
+  context:
+    - write_code
+
+refactor_code:
+  description: >
+    Refactor the provided code using the latest reviewer feedback.
+    Preserve intended behavior while improving clarity and maintainability.
+  expected_output: >
+    Updated code that addresses all reviewer findings and remains aligned with
+    the user request ({prompt}).
+  agent: coder
+  context:
+    - review_code
